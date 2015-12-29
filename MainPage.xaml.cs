@@ -117,6 +117,8 @@ namespace WeatherLogger
                 ReadWeatherData().ContinueWith((t) =>
                 {
                     WeatherData wd = t.Result;
+                    AdafruitIO io = new AdafruitIO();
+                    io.sendData(wd);
                     Debug.WriteLine(wd.Created);
                     //Write the values to your debug console
                     Debug.WriteLine("Created: " + wd.Created + " ft");
@@ -128,8 +130,7 @@ namespace WeatherLogger
                    // string json = JsonConvert.SerializeObject(wd);
 
                     Debug.WriteLine("");
-                    AdafruitIO io = new AdafruitIO();
-                    io.sendData(wd);
+
                 }, TaskScheduler.FromCurrentSynchronizationContext());
 
                 pinValue = GpioPinValue.High;
