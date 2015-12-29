@@ -97,13 +97,6 @@ namespace WeatherLogger
                 wd.Created = DateTime.Now;
                 wd.TemperatureinF = temp;
                 wd.Pressureinmb = pressure;
-
-                ////Write the values to your debug console
-                //Debug.WriteLine("Temperature: " + temp + " deg F");
-                //Debug.WriteLine("Pressure: " + pressure + " mb");
-                //Debug.WriteLine("Altitude: " + altitude + " ft");
-                //Debug.WriteLine("");
-
             }
             catch (Exception ex)
             {
@@ -121,31 +114,31 @@ namespace WeatherLogger
             {
                 pinValue = GpioPinValue.Low;
                 pin.Write(pinValue);
-                LED.Fill = redBrush;
                 ReadWeatherData().ContinueWith((t) =>
                 {
                     WeatherData wd = t.Result;
                     Debug.WriteLine(wd.Created);
                     //Write the values to your debug console
                     Debug.WriteLine("Created: " + wd.Created + " ft");
+                    txtTime.Text = "Created: " + wd.Created + " ft";
                     Debug.WriteLine("Temperature: " + wd.TemperatureinF + " deg F");
+                    txtTemp.Text = "Temperature: " + wd.TemperatureinF + " deg F";
                     Debug.WriteLine("Pressure: " + wd.Pressureinmb + " mb");
+                    txtPressure.Text = "Pressure: " + wd.Pressureinmb + " mb";
                    // string json = JsonConvert.SerializeObject(wd);
 
                     Debug.WriteLine("");
                     AdafruitIO io = new AdafruitIO();
                     io.sendData(wd);
-                });
+                }, TaskScheduler.FromCurrentSynchronizationContext());
 
                 pinValue = GpioPinValue.High;
                 pin.Write(pinValue);
-                LED.Fill = grayBrush;
             }
             else
             {
                 pinValue = GpioPinValue.High;
                 pin.Write(pinValue);
-                LED.Fill = grayBrush;
             }
         }
              

@@ -15,7 +15,8 @@ namespace WeatherLogger
     class AdafruitIO
     {
         private string AIO = "ENTER YOUR CODE HERE";
-        private string Feed = "ENTER FEED ID HERE";
+        //this is not needed right now as I am doing a simple http get, when RestSharp works for UWP I will re-write this.
+        //private string Feed = "ENTER FEED ID HERE";
 
         public async void getFeeds()
         {
